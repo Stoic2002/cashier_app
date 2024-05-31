@@ -1,10 +1,16 @@
 import 'package:cashier_app/core/assets/assets.gen.dart';
 import 'package:cashier_app/core/constants/app_colors.dart';
-import 'package:cashier_app/core/extension/int_ext.dart';
+
 import 'package:cashier_app/features/order/data/order_model.dart';
+import 'package:cashier_app/features/order/presentation/widget/add_more_profuct_button.dart';
+import 'package:cashier_app/features/order/presentation/widget/change_location.dart';
+import 'package:cashier_app/features/order/presentation/widget/payment_method.dart';
+import 'package:cashier_app/features/order/presentation/widget/product_item.dart';
+import 'package:cashier_app/features/order/presentation/widget/time_slot_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class MyBagPage extends StatefulWidget {
   const MyBagPage({super.key});
@@ -19,7 +25,9 @@ class _MyBagPageState extends State<MyBagPage> {
     OrderModel('Nestle Nido Full Cream Milk Powder Instant', 2000),
     OrderModel('Cheese Puffs Chips - 22 gm', 4500)
   ];
+  TextEditingController dateInput = TextEditingController();
 
+  int? _selectedIndex;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,113 +64,241 @@ class _MyBagPageState extends State<MyBagPage> {
                     Container(
                       width: double.infinity,
                       height: 350,
-                      child: ListView.separated(
-                          itemCount: orderProduct.length,
-                          separatorBuilder: (context, index) {
-                            return Divider();
-                          },
-                          itemBuilder: (context, index) {
-                            return Container(
-                              width: double.infinity,
-                              height: 163,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 115,
-                                    height: 121,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(9),
-                                    ),
-                                    child: Assets.images.dano.image(),
-                                  ),
-                                  Container(
-                                    width: 250,
-                                    height: 120,
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 203,
-                                          height: 60,
-                                          child: Text(
-                                            orderProduct[index].nama,
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 203,
-                                          height: 60,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                child: Text(
-                                                  orderProduct[index]
-                                                      .price
-                                                      .currencyFormatRp,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color:
-                                                          AppColors.priceTag),
-                                                ),
-                                              ),
-                                              Container(
-                                                width: 100,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                      width: 35,
-                                                      height: 35,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.red,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7),
-                                                      ),
-                                                      child: InkWell(
-                                                        child: Icon(
-                                                          size: 14,
-                                                          Icons.remove,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Text('1'),
-                                                    Container(
-                                                      width: 35,
-                                                      height: 35,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.green,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(7)),
-                                                      child: InkWell(
-                                                        child: Icon(
-                                                          size: 14,
-                                                          Icons.add,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }),
+                      child: ProductItem(orderProduct: orderProduct),
                     ),
+                    SizedBox(
+                      height: 28,
+                    ),
+                    AddMoreProductButton(),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Container(
+                      child: Text(
+                        'Expected Date & Time',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 52,
+                      width: double.infinity,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "tanggal tidak boleh kosong";
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: dateInput,
+                        //editing controller of this TextField
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(left: 10),
+                          hintText: 'Select Date',
+                          filled: true,
+                          fillColor: AppColors.grey,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8)),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down),
+                          prefixIcon: Icon(Icons.calendar_today_outlined),
+                          //icon of text field
+                          //label text of field
+                        ),
+                        readOnly: true,
+                        //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2024),
+                              //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2025));
+
+                          if (pickedDate != null) {
+                            print(
+                                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate = DateFormat(
+                              'dd MMMM yyyy',
+                            ).format(pickedDate);
+                            print(
+                                formattedDate); //formatted date output using intl package =>  2021-03-16
+                            setState(() {
+                              dateInput.text = formattedDate;
+                              //set output date to  TextField value.
+                            });
+                          } else {}
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 19,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: Wrap(
+                        spacing: 28,
+                        runSpacing: 16,
+                        children: [
+                          TimeSlotContainer(
+                            '8 AM - 11 AM',
+                            isSelected: _selectedIndex == 0,
+                            onTap: () => _handleTap(0),
+                          ),
+                          TimeSlotContainer(
+                            '11 AM - 12 PM',
+                            isSelected: _selectedIndex == 1,
+                            onTap: () => _handleTap(1),
+                          ),
+                          TimeSlotContainer(
+                            '12 PM - 2 PM',
+                            isSelected: _selectedIndex == 2,
+                            onTap: () => _handleTap(2),
+                          ),
+                          TimeSlotContainer(
+                            '2 PM - 4 PM',
+                            isSelected: _selectedIndex == 3,
+                            onTap: () => _handleTap(3),
+                          ),
+                          TimeSlotContainer(
+                            '4 PM - 6 PM',
+                            isSelected: _selectedIndex == 4,
+                            onTap: () => _handleTap(4),
+                          ),
+                          TimeSlotContainer(
+                            '6 PM - 8 PM',
+                            isSelected: _selectedIndex == 5,
+                            onTap: () => _handleTap(5),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Text(
+                            'Delivery Location',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        Container(
+                          child: Text(
+                            'change',
+                            style: TextStyle(
+                                fontSize: 16, color: AppColors.primary),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ChangeLoc(),
+                    SizedBox(
+                      height: 47,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 103,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Subtotal',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Text(
+                                'BDT369',
+                                style: TextStyle(fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Delivery Charge',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Text(
+                                'BDT60',
+                                style: TextStyle(fontSize: 15),
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Text(
+                                'BDT3321',
+                                style: TextStyle(fontSize: 15),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 38,
+                    ),
+                    Container(
+                      child: Text(
+                        'Payment Method',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 17,
+                    ),
+                    PaymentMethod(),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      height: 48,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(''),
+                            Text(
+                              'Place Order',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                              size: 24,
+                            )
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                            backgroundColor: AppColors.primary,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8))),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    )
                   ],
                 ),
               )
@@ -171,5 +307,15 @@ class _MyBagPageState extends State<MyBagPage> {
         ),
       ),
     );
+  }
+
+  void _handleTap(int index) {
+    setState(() {
+      if (_selectedIndex == index) {
+        _selectedIndex = null;
+      } else {
+        _selectedIndex = index;
+      }
+    });
   }
 }
