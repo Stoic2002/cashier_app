@@ -8,7 +8,9 @@ import 'package:cashier_app/features/order/presentation/pages/mybag_page.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  final int currentTab;
+
+  const Dashboard({super.key, required this.currentTab});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -23,6 +25,13 @@ class _DashboardState extends State<Dashboard> {
     MyBagPage(),
     MorePage()
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _currentIndex = widget.currentTab;
+    super.initState();
+  }
 
   void _onItemTapped(index) {
     setState(() {

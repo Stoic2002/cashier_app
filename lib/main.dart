@@ -1,5 +1,4 @@
-import 'package:cashier_app/features/home/presentation/pages/dashboard.dart';
-import 'package:cashier_app/features/home/presentation/pages/home_page.dart';
+import 'package:cashier_app/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,12 +12,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final appRouter = AppRouter();
+    final router = appRouter.router;
+    return MaterialApp.router(
       theme: ThemeData(
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      home: Dashboard(),
       debugShowCheckedModeBanner: false,
+      routerDelegate: router.routerDelegate,
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
     );
   }
 }

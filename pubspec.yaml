@@ -39,6 +39,7 @@ dependencies:
   flutter_svg:
   google_fonts:
   intl:
+  go_router: ^14.1.4
 
 dev_dependencies:
   build_runner: ^2.4.8
