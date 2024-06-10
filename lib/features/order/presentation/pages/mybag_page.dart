@@ -1,7 +1,9 @@
 import 'package:cashier_app/core/assets/assets.gen.dart';
 import 'package:cashier_app/core/constants/app_colors.dart';
+import 'package:cashier_app/core/extension/int_ext.dart';
 
 import 'package:cashier_app/features/order/data/order_model.dart';
+import 'package:cashier_app/features/order/presentation/bloc/checkout/checkout_bloc.dart';
 import 'package:cashier_app/features/order/presentation/widget/add_more_profuct_button.dart';
 import 'package:cashier_app/features/order/presentation/widget/change_location.dart';
 import 'package:cashier_app/features/order/presentation/widget/payment_method.dart';
@@ -10,6 +12,7 @@ import 'package:cashier_app/features/order/presentation/widget/time_slot_contain
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class MyBagPage extends StatefulWidget {
@@ -217,9 +220,22 @@ class _MyBagPageState extends State<MyBagPage> {
                                 'Subtotal',
                                 style: TextStyle(fontSize: 15),
                               ),
-                              Text(
-                                'BDT369',
-                                style: TextStyle(fontSize: 15),
+                              BlocBuilder<CheckoutBloc, CheckoutState>(
+                                builder: (context, state) {
+                                  if (state is CheckoutLoaded) {
+                                    final totalPrice = state.products.fold<int>(
+                                        0,
+                                        (previousValue, element) =>
+                                            previousValue +
+                                            (element.quantity *
+                                                element.product.price!));
+                                    return Text(
+                                      totalPrice.currencyFormatRp,
+                                      style: TextStyle(fontSize: 15),
+                                    );
+                                  }
+                                  return Text('0');
+                                },
                               )
                             ],
                           ),

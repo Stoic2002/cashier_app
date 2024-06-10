@@ -106,7 +106,7 @@ class DataProduct {
             updateAt: DateTime(2024),
           ),
           ProductModel(
-              id: 123,
+              id: 124,
               categoryId: 5,
               name: 'Cheese Puffs Chips - 22 gm',
               image: Assets.images.chips.image(),
@@ -118,7 +118,7 @@ class DataProduct {
               createdAt: DateTime(2024),
               updateAt: DateTime(2024)),
           ProductModel(
-              id: 123,
+              id: 125,
               categoryId: 5,
               name: 'Nescafe Classic Coffee Jar - 50gm',
               image: Assets.images.nescafe.image(),
@@ -130,7 +130,7 @@ class DataProduct {
               createdAt: DateTime(2024),
               updateAt: DateTime(2024)),
           ProductModel(
-              id: 123,
+              id: 126,
               categoryId: 5,
               name: 'Akher Chini (Deshi Sugar) - 1kg',
               image: Assets.images.akher.image(),
