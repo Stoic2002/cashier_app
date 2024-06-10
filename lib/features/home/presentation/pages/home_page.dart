@@ -1,10 +1,13 @@
 import 'package:cashier_app/core/assets/assets.gen.dart';
-
+import 'package:cashier_app/core/router/app_router.dart';
+import 'package:cashier_app/core/router/route_constants.dart';
+import 'package:cashier_app/features/home/data/datasources/data_product.dart';
 import 'package:cashier_app/features/home/presentation/widget/seacrh_product.dart';
 import 'package:cashier_app/features/home/presentation/widget/user_location.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,32 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Map<String, dynamic>> categories = [
-    {
-      'image': Assets.images.fruits.image(),
-      'title': 'Fruits & Vegetables',
-    },
-    {
-      'image': Assets.images.breakfast.image(),
-      'title': 'Breakfast',
-    },
-    {
-      'image': Assets.images.beverages.image(),
-      'title': 'Beverages',
-    },
-    {
-      'image': Assets.images.meat.image(),
-      'title': 'Meat & Fish',
-    },
-    {
-      'image': Assets.images.snacks.image(),
-      'title': 'Snacks',
-    },
-    {
-      'image': Assets.images.dairy.image(),
-      'title': 'Dairy',
-    },
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,21 +62,25 @@ class _HomePageState extends State<HomePage> {
                             mainAxisSpacing: 10,
                             crossAxisSpacing: 10,
                             crossAxisCount: 2),
-                    itemCount: categories.length,
+                    itemCount: DataProduct().categories.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final category = categories[index];
-                      return GestureDetector(
-                        onTap: () {},
+                      final category = DataProduct().categories[index];
+                      return InkWell(
+                        onTap: () {
+                          context.goNamed(RouteConstants.categoriesPath,
+                              pathParameters: PathParameters().toMap(),
+                              extra: category);
+                        },
                         child: Card(
                             color: Colors.white,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Container(
-                                  child: category['image'],
+                                  child: category.image,
                                 ),
                                 Text(
-                                  category['title'],
+                                  category.categoryName,
                                   style: TextStyle(fontSize: 13),
                                 )
                               ],

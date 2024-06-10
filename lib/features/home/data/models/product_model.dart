@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
+
 class ProductModel {
   final int id;
   final int categoryId;
   final String name;
-  final String image;
-  final double price;
+  final Image image;
+  final int price;
   final String description;
   final int stock;
   final int isAvailable;
@@ -11,14 +13,14 @@ class ProductModel {
   final DateTime updateAt;
 
   ProductModel(
-      this.id,
-      this.categoryId,
-      this.name,
-      this.image,
-      this.price,
-      this.description,
-      this.stock,
-      this.isAvailable,
-      this.createdAt,
-      this.updateAt);
+      {required this.id,
+      required this.categoryId,
+      required this.name,
+      required this.image,
+      required this.price,
+      required this.description,
+      required this.stock,
+      required this.isAvailable,
+      required this.createdAt,
+      required this.updateAt});
 }

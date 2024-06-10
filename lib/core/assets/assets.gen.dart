@@ -57,6 +57,9 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/akher.png
+  AssetGenImage get akher => const AssetGenImage('assets/images/akher.png');
+
   /// File path: assets/images/background.png
   AssetGenImage get background =>
       const AssetGenImage('assets/images/background.png');
@@ -77,6 +80,9 @@ class $AssetsImagesGen {
   AssetGenImage get breakfast2 =>
       const AssetGenImage('assets/images/breakfast2.png');
 
+  /// File path: assets/images/chips.png
+  AssetGenImage get chips => const AssetGenImage('assets/images/chips.png');
+
   /// File path: assets/images/dairy.png
   AssetGenImage get dairy => const AssetGenImage('assets/images/dairy.png');
 
@@ -85,6 +91,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/dano.png
   AssetGenImage get dano => const AssetGenImage('assets/images/dano.png');
+
+  /// File path: assets/images/dano2.png
+  AssetGenImage get dano2 => const AssetGenImage('assets/images/dano2.png');
 
   /// File path: assets/images/fruits.png
   AssetGenImage get fruits => const AssetGenImage('assets/images/fruits.png');
@@ -101,8 +110,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/meat2.png
   AssetGenImage get meat2 => const AssetGenImage('assets/images/meat2.png');
 
+  /// File path: assets/images/nescafe.png
+  AssetGenImage get nescafe => const AssetGenImage('assets/images/nescafe.png');
+
   /// File path: assets/images/nido.png
   AssetGenImage get nido => const AssetGenImage('assets/images/nido.png');
+
+  /// File path: assets/images/radhuni.png
+  AssetGenImage get radhuni => const AssetGenImage('assets/images/radhuni.png');
 
   /// File path: assets/images/snacks.png
   AssetGenImage get snacks => const AssetGenImage('assets/images/snacks.png');
@@ -112,20 +127,25 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<dynamic> get values => [
+        akher,
         background,
         beverages,
         beverages2,
         breakfast,
         breakfast2,
+        chips,
         dairy,
         dairy2,
         dano,
+        dano2,
         fruits,
         fruits2,
         logo,
         meat,
         meat2,
+        nescafe,
         nido,
+        radhuni,
         snacks,
         snacks2
       ];
