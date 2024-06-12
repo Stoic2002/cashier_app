@@ -2,8 +2,7 @@ import 'package:cashier_app/core/assets/assets.gen.dart';
 import 'package:cashier_app/core/components/circle_loading.dart';
 import 'package:cashier_app/core/constants/app_colors.dart';
 import 'package:cashier_app/core/extension/int_ext.dart';
-import 'package:cashier_app/features/home/data/models/product_model.dart';
-import 'package:cashier_app/features/order/data/order_model.dart';
+
 import 'package:cashier_app/features/order/presentation/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,10 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ProductItem extends StatelessWidget {
   const ProductItem({
     super.key,
-    required this.orderProduct,
   });
-
-  final List<OrderModel> orderProduct;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +41,7 @@ class ProductItem extends StatelessWidget {
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(9),
                         ),
-                        child: Assets.images.dano.image(),
+                        child: state.products[index].product.image,
                       ),
                       Container(
                         width: 250,

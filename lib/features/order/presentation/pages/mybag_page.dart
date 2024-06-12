@@ -1,14 +1,17 @@
 import 'package:cashier_app/core/assets/assets.gen.dart';
 import 'package:cashier_app/core/constants/app_colors.dart';
 import 'package:cashier_app/core/extension/int_ext.dart';
+import 'package:cashier_app/features/home/data/models/quantity_model.dart';
 
-import 'package:cashier_app/features/order/data/order_model.dart';
+import 'package:cashier_app/features/order/data/models/order_model.dart';
+import 'package:cashier_app/features/order/presentation/bloc/bloc/order_bloc.dart';
 import 'package:cashier_app/features/order/presentation/bloc/checkout/checkout_bloc.dart';
 import 'package:cashier_app/features/order/presentation/widget/add_more_profuct_button.dart';
 import 'package:cashier_app/features/order/presentation/widget/change_location.dart';
 import 'package:cashier_app/features/order/presentation/widget/payment_method.dart';
 import 'package:cashier_app/features/order/presentation/widget/product_item.dart';
 import 'package:cashier_app/features/order/presentation/widget/time_slot_container.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,11 +26,6 @@ class MyBagPage extends StatefulWidget {
 }
 
 class _MyBagPageState extends State<MyBagPage> {
-  final List<OrderModel> orderProduct = [
-    OrderModel('Arla DANO Full Cream Milk Powder Instant', 1000),
-    OrderModel('Nestle Nido Full Cream Milk Powder Instant', 2000),
-    OrderModel('Cheese Puffs Chips - 22 gm', 4500)
-  ];
   TextEditingController dateInput = TextEditingController();
 
   int? _selectedIndex;
@@ -67,7 +65,7 @@ class _MyBagPageState extends State<MyBagPage> {
                     Container(
                       width: double.infinity,
                       height: 350,
-                      child: ProductItem(orderProduct: orderProduct),
+                      child: ProductItem(),
                     ),
                     SizedBox(
                       height: 28,
@@ -284,34 +282,53 @@ class _MyBagPageState extends State<MyBagPage> {
                     SizedBox(
                       height: 30,
                     ),
-                    Container(
-                      height: 48,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(''),
-                            Text(
-                              'Place Order',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+                    BlocBuilder<CheckoutBloc, CheckoutState>(
+                        builder: (context, state) {
+                      if (state is CheckoutFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Pembayaran Gagal')));
+                      }
+                      if (state is CheckoutLoaded) {
+                        return Container(
+                          height: 48,
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              context.read<OrderBloc>().add(OnOrder(
+                                  transactionId:
+                                      DateTime.now().millisecondsSinceEpoch,
+                                  products: state.products));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Pembayaran Berhasil')));
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(''),
+                                Text(
+                                  'Place Order',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                  size: 24,
+                                )
+                              ],
                             ),
-                            Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                              size: 24,
-                            )
-                          ],
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            shadowColor: Colors.transparent,
-                            backgroundColor: AppColors.primary,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8))),
-                      ),
-                    ),
+                            style: ElevatedButton.styleFrom(
+                                shadowColor: Colors.transparent,
+                                backgroundColor: AppColors.primary,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8))),
+                          ),
+                        );
+                      }
+
+                      return Container();
+                    }),
                     SizedBox(
                       height: 25,
                     )
