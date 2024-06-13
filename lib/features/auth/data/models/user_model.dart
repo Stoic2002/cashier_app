@@ -37,4 +37,22 @@ class UserModel {
         "role": role,
         "createdAt": createdAt?.toIso8601String()
       };
+
+  UserModel copyWith({
+    String? userId,
+    String? name,
+    String? email,
+    String? phone,
+    String? role,
+    DateTime? createdAt,
+  }) {
+    return UserModel(
+      userId: userId ?? this.userId,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      role: role ?? this.role,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }

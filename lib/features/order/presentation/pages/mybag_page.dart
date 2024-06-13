@@ -12,6 +12,7 @@ import 'package:cashier_app/features/order/presentation/widget/payment_method.da
 import 'package:cashier_app/features/order/presentation/widget/product_item.dart';
 import 'package:cashier_app/features/order/presentation/widget/time_slot_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -27,7 +28,7 @@ class MyBagPage extends StatefulWidget {
 
 class _MyBagPageState extends State<MyBagPage> {
   TextEditingController dateInput = TextEditingController();
-
+  final user = FirebaseAuth.instance.currentUser;
   int? _selectedIndex;
   @override
   Widget build(BuildContext context) {
@@ -294,13 +295,18 @@ class _MyBagPageState extends State<MyBagPage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              context.read<OrderBloc>().add(OnOrder(
-                                  transactionId:
-                                      DateTime.now().millisecondsSinceEpoch,
-                                  products: state.products));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text('Pembayaran Berhasil')));
+                              if (user != null) {
+                                final uid = user!.uid;
+
+                                context.read<OrderBloc>().add(OnOrder(
+                                    userId: uid,
+                                    transactionId:
+                                        DateTime.now().millisecondsSinceEpoch,
+                                    products: state.products));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text('Pembayaran Berhasil')));
+                              }
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

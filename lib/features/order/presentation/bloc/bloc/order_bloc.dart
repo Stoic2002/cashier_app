@@ -19,6 +19,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       }
 
       final orderRequestData = OrderModel(
+          userId: event.userId,
           transactionId: event.transactionId,
           subtotal: subTotal,
           products: event.products
