@@ -1,5 +1,7 @@
 import 'package:cashier_app/core/router/route_constants.dart';
-import 'package:cashier_app/features/auth/presentation/splash_screen_page.dart';
+import 'package:cashier_app/features/auth/presentation/pages/login_page.dart';
+import 'package:cashier_app/features/auth/presentation/pages/register_page.dart';
+import 'package:cashier_app/features/auth/presentation/pages/splash_screen_page.dart';
 import 'package:cashier_app/features/home/data/models/category_model.dart';
 import 'package:cashier_app/features/home/data/models/product_model.dart';
 import 'package:cashier_app/features/home/presentation/pages/dashboard.dart';
@@ -20,6 +22,18 @@ class AppRouter {
           path: RouteConstants.splashPath,
           name: RouteConstants.splash,
           builder: (context, state) => const SplashScreen(),
+        ),
+        GoRoute(
+          name: RouteConstants.login,
+          path: RouteConstants.loginPath,
+          builder: (context, state) => const LoginPage(),
+          routes: [
+            GoRoute(
+              name: RouteConstants.register,
+              path: RouteConstants.registerPath,
+              builder: (context, state) => const RegisterPage(),
+            ),
+          ],
         ),
         GoRoute(
             name: RouteConstants.root,

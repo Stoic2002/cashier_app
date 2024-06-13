@@ -1,9 +1,11 @@
 import 'package:cashier_app/core/assets/assets.gen.dart';
 import 'package:cashier_app/core/constants/app_colors.dart';
-import 'package:cashier_app/features/home/data/models/category_model.dart';
+
 import 'package:cashier_app/features/home/data/models/product_model.dart';
+import 'package:cashier_app/features/order/presentation/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:cashier_app/core/extension/int_ext.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailProductPage extends StatefulWidget {
   final ProductModel productModel;
@@ -135,7 +137,11 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 height: 48,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context
+                        .read<CheckoutBloc>()
+                        .add(AddProduct(product: widget.productModel));
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

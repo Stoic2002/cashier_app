@@ -5,8 +5,10 @@ import 'package:cashier_app/core/router/app_router.dart';
 import 'package:cashier_app/core/router/route_constants.dart';
 import 'package:cashier_app/features/home/data/models/category_model.dart';
 import 'package:cashier_app/features/home/data/models/product_model.dart';
+import 'package:cashier_app/features/order/presentation/bloc/checkout/checkout_bloc.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class CategoryItemPage extends StatefulWidget {
@@ -101,7 +103,11 @@ class _CategoryItemPageState extends State<CategoryItemPage> {
                       height: 35,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context
+                              .read<CheckoutBloc>()
+                              .add(AddProduct(product: product));
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

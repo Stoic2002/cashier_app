@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "175435654243",
+    "project_id": "cashier-app-34caf",
+    "storage_bucket": "cashier-app-34caf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175435654243:android:3750aabec5a857ac024456",
+        "android_client_info": {
+          "package_name": "com.example.cashier_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXzeOh6c1RU7lOoW4rFGpZHgUMf__Q0RE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,7 +10,7 @@ class DataProduct {
         image: Assets.images.fruits.image(),
         productModel: [
           ProductModel(
-              id: 123,
+              id: 987,
               categoryId: 1,
               name: 'melon asjdasjsa sajdoasijdoas jdoiasjodajs',
               image: Assets.images.nido.image(),
@@ -22,7 +22,7 @@ class DataProduct {
               createdAt: DateTime(2024),
               updateAt: DateTime(2024)),
           ProductModel(
-              id: 124,
+              id: 775,
               categoryId: 1,
               name: 'semangka sadasjjs dasjdoasj isajdoaj',
               image: Assets.images.nido.image(),
@@ -40,7 +40,7 @@ class DataProduct {
         image: Assets.images.breakfast.image(),
         productModel: [
           ProductModel(
-              id: 223,
+              id: 765,
               categoryId: 2,
               name: 'nasi ndog',
               image: Assets.images.dairy2.image(),
@@ -58,7 +58,7 @@ class DataProduct {
         image: Assets.images.beverages.image(),
         productModel: [
           ProductModel(
-              id: 123,
+              id: 543,
               categoryId: 3,
               name: 'jus melon',
               image: Assets.images.dairy2.image(),
@@ -106,7 +106,7 @@ class DataProduct {
             updateAt: DateTime(2024),
           ),
           ProductModel(
-              id: 123,
+              id: 124,
               categoryId: 5,
               name: 'Cheese Puffs Chips - 22 gm',
               image: Assets.images.chips.image(),
@@ -118,7 +118,7 @@ class DataProduct {
               createdAt: DateTime(2024),
               updateAt: DateTime(2024)),
           ProductModel(
-              id: 123,
+              id: 125,
               categoryId: 5,
               name: 'Nescafe Classic Coffee Jar - 50gm',
               image: Assets.images.nescafe.image(),
@@ -130,7 +130,7 @@ class DataProduct {
               createdAt: DateTime(2024),
               updateAt: DateTime(2024)),
           ProductModel(
-              id: 123,
+              id: 126,
               categoryId: 5,
               name: 'Akher Chini (Deshi Sugar) - 1kg',
               image: Assets.images.akher.image(),

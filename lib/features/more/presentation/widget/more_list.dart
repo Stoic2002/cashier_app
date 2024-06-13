@@ -1,4 +1,7 @@
+import 'package:cashier_app/core/router/route_constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MoreList extends StatelessWidget {
   const MoreList({
@@ -69,14 +72,10 @@ class MoreList extends StatelessWidget {
           ),
           Divider(),
           InkWell(
-            child: ListTile(
-              contentPadding: EdgeInsets.only(left: 20, right: 10),
-              leading: Icon(Icons.facebook_rounded),
-              title: Text('Message to facebook page'),
-            ),
-          ),
-          Divider(),
-          InkWell(
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+              context.goNamed(RouteConstants.login);
+            },
             child: ListTile(
               contentPadding: EdgeInsets.only(left: 20, right: 10),
               leading: Icon(Icons.logout_outlined),
