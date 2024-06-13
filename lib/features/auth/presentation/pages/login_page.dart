@@ -3,9 +3,11 @@ import 'package:cashier_app/core/constants/app_colors.dart';
 import 'package:cashier_app/core/router/app_router.dart';
 import 'package:cashier_app/core/router/route_constants.dart';
 import 'package:cashier_app/features/auth/data/datasource/auth_method.dart';
+import 'package:cashier_app/features/auth/presentation/bloc/login/login_bloc.dart';
 import 'package:cashier_app/features/auth/presentation/widget/custom_textformfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
@@ -137,6 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary),
                       onPressed: () {
+                        // context.read<LoginBloc>().add(OnLogin(
+                        //     _emailController.text, _passwordController.text));
                         loginUser();
                       },
                       child: Text(

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderModel {
   final int? transactionId;
-
+  final String userId;
   final int? subtotal;
 
   final List<ProductsModel> products;
@@ -11,12 +11,14 @@ class OrderModel {
   OrderModel(
       {required this.transactionId,
       required this.subtotal,
-      required this.products});
+      required this.products,
+      required this.userId});
 
   static OrderModel fromSnapshot(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return OrderModel(
+      userId: snapshot['userId'],
       transactionId: snapshot['transactionId'],
       subtotal: snapshot['subTotal'],
       products: snapshot["products"] == null
@@ -27,6 +29,7 @@ class OrderModel {
   }
 
   Map<String, dynamic> toJson() => {
+        "userId": userId,
         "transactionId": transactionId,
         "subTotal": subtotal,
         "products": products == ""
